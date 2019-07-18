@@ -247,7 +247,6 @@ static int l_usb_control_msg(lua_State *L) {
 		size = lua_tonumber(L, 6);
 		bytes=malloc(size);
 	}
-	int size = lua_strlen (L, 6);
 	int timeout = lua_tonumber(L, 7);
 	
 	int ret = usb_control_msg(dev_handle, requesttype, request, 
