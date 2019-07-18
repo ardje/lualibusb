@@ -6,7 +6,7 @@ LOPTS=-c -fPIC -fno-stack-protector
 OBJS=lualibusb.o
 OBJS_SO = lualibusb.so
 
-CFLAGS=$(OPTS) -I$(LIBUSB_SRC) -I$(LUA_SRC) 
+CFLAGS=$(OPTS) -fPIC $(shell pkg-config --cflags lua5.1)
 LDFLAGS=-shared -soname libluausb.so.1 -o
 
 
