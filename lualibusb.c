@@ -241,11 +241,11 @@ static int l_usb_control_msg(lua_State *L) {
 	char *bytes;
 	if (lua_type(L,6)==LUA_TSTRING) {
 		size = lua_strlen (L, 6);
-		bytes=malloc(size)
+		bytes=malloc(size);
 		memcpy(bytes, lua_tostring (L, 6),size);
 	} else {
 		size = lua_tonumber(L, 6);
-		bytes=malloc(size)
+		bytes=malloc(size);
 	}
 	int size = lua_strlen (L, 6);
 	int timeout = lua_tonumber(L, 7);
