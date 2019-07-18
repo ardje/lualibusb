@@ -237,23 +237,30 @@ static int l_usb_control_msg(lua_State *L) {
 	int request = lua_tonumber(L, 3);
 	int value = lua_tonumber(L, 4);
 	int index = lua_tonumber(L, 5);
-	const char *bytes = lua_tostring (L, 6);
+	int size;
+	char *bytes;
+	if (lua_type(L,6)==LUA_TSTRING) {
+		size = lua_strlen (L, 6);
+		bytes=malloc(size)
+		memcpy(bytes, lua_tostring (L, 6),size);
+	} else {
+		size = lua_tonumber(L, 6);
+		bytes=malloc(size)
+	}
 	int size = lua_strlen (L, 6);
 	int timeout = lua_tonumber(L, 7);
 	
-	//make a copy just in case (why it isn't const?)
-	char *bytes_copy=(char*)malloc(size);
-	memcpy(bytes_copy, bytes, size);
-	
 	int ret = usb_control_msg(dev_handle, requesttype, request, 
-							value, index, bytes_copy, size, timeout);	
+							value, index, bytes, size, timeout);	
 	
 	if( ret < 0 ) {
 		lua_pushnil (L);
 		lua_pushnumber (L, ret);
+		free(bytes)
 		return 2; /* number of results */   
-	} else{
-		lua_pushlstring (L, bytes_copy, ret);
+	} else {
+		lua_pushlstring (L, bytes, ret);
+		free(bytes)
 		return 1; /* number of results */   
 	}
 }
