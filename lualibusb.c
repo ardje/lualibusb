@@ -255,11 +255,11 @@ static int l_usb_control_msg(lua_State *L) {
 	if( ret < 0 ) {
 		lua_pushnil (L);
 		lua_pushnumber (L, ret);
-		free(bytes)
+		free(bytes);
 		return 2; /* number of results */   
 	} else {
 		lua_pushlstring (L, bytes, ret);
-		free(bytes)
+		free(bytes);
 		return 1; /* number of results */   
 	}
 }
